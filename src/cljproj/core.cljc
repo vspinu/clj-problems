@@ -1,10 +1,11 @@
 (ns cljproj.core
   (:require
-   [clojure.core.async :as a :refer [>! <!]])
+   #?(:clj  [clojure.core.async :refer [go >! <!]]
+      :cljs [cljs.core.async :as a :refer [>! <!]]))
   #?(:cljs
      (:require-macros
       [cljproj.core]
-      [cljs.core.async.macros :as a])))
+      [cljs.core.async.macros :as am :refer [go]])))
 
 (defmacro tt [ch]
-  `(a/go (println (<! ~ch))))
+  `(go (println (<! ~ch))))
